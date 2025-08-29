@@ -1,5 +1,5 @@
 # langgraph-chatbot
 
-## Running
+## How to run
 
-python3 -m src.graph
+python3 -m src.main
