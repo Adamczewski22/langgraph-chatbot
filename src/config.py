@@ -10,4 +10,4 @@ def env(name: str) -> str:
     return val
 
 OPENAI_API_KEY = env("OPENAI_API_KEY")
-LANGSMITH_API_KEY = env("LANGSMITH_API_KEY")
+#LANGSMITH_API_KEY = env("LANGSMITH_API_KEY")
