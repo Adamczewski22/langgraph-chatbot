@@ -3,12 +3,13 @@ from langgraph.graph.state import CompiledStateGraph
 from langgraph.prebuilt import ToolNode
 from langgraph.prebuilt.tool_node import tools_condition
 from langgraph.checkpoint.memory import MemorySaver
+from functools import lru_cache
 
 from src.nodes import query_or_respond, generate
 from src.tools import retrieve
 
-
-def build_graph() -> CompiledStateGraph:
+@lru_cache(maxsize=1)
+def get_graph() -> CompiledStateGraph:
     """Builds and returns a runnable graph"""
 
     graph_builder = StateGraph(MessagesState)

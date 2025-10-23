@@ -23,16 +23,16 @@ Zasady odpowiedzi (RAG + narzędzie):
 """
 
 
-def query_or_respond(state: MessagesState):
+async def query_or_respond(state: MessagesState):
     llm_with_tools = get_llm().bind_tools([retrieve])
     system_message = SystemMessage(SYSTEM_TEXT)
     history = get_message_window(state["messages"], CONVO_MEMORY_WINDOW)
 
-    response = llm_with_tools.invoke([system_message] + history)
+    response = await llm_with_tools.ainvoke([system_message] + history)
     return {"messages": [response]} 
 
 
-def generate(state: MessagesState):
+async def generate(state: MessagesState):
     tool_messages = []
     for message in reversed(state["messages"]):
         if (message.type == "tool"):
@@ -44,5 +44,5 @@ def generate(state: MessagesState):
     system_message = SystemMessage(SYSTEM_TEXT + f"\nKONTEKST VERBATIM:\n```{context}```")
     history = get_message_window(state["messages"], CONVO_MEMORY_WINDOW)
 
-    response = get_llm().invoke([system_message] + history)
+    response = await get_llm().ainvoke([system_message] + history)
     return {"messages": [response]}

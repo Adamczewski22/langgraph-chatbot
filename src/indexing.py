@@ -13,10 +13,11 @@ DATA_DIR = BASE_DIR / "data"
 FAQ_PATH = DATA_DIR / "faq.docx"
 
 
-def populate_vector_store() -> None:
+async def populate_vector_store() -> None:
     """Populates the in-memory vector store with indexed data"""
     vs = get_vector_store()
-    splits = split_docs(load_docs(FAQ_PATH))
+    docs = await load_docs(FAQ_PATH)
+    splits = split_docs(docs)
     vs.add_documents(splits)
 
 
@@ -31,8 +32,8 @@ def split_docs(docs: list[Document]) -> list[Document]:
     return splits
 
 
-def load_docs(path: Path) -> list[Document]:
+async def load_docs(path: Path) -> list[Document]:
     """Loads the document based on path"""
     loader = Docx2txtLoader(path)
-    docs = loader.load()
+    docs = await loader.aload()
     return docs
