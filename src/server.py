@@ -6,7 +6,6 @@ from typing import Annotated
 from contextlib import asynccontextmanager
 
 from src.run import chat
-from src.indexing import populate_vector_store
 
 MAX_USER_MESSAGE_LEN = 200
 CHAT_TIMEOUT = 30
@@ -20,8 +19,7 @@ log = logging.getLogger("chatbot")
 async def lifespan(app: FastAPI):
     try:
         log.info("Server starting")
-        await populate_vector_store()
-        log.info("Vector store ready")
+        # TODO
         yield
     
     except Exception as e:

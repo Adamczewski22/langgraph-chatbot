@@ -2,8 +2,10 @@ from pathlib import Path
 from langchain_community.document_loaders import Docx2txtLoader
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_core.documents import Document
+from langchain_chroma import Chroma
 
 from src.llm import get_vector_store
+from src.config import OPENAI_API_KEY
 
 SEPARATOR = "#"
 CHUNK_SIZE = 240
@@ -13,10 +15,10 @@ DATA_DIR = BASE_DIR / "data"
 FAQ_PATH = DATA_DIR / "faq.docx"
 
 
-async def populate_vector_store() -> None:
-    """Populates the in-memory vector store with indexed data"""
+def populate_vector_store() -> None:
+    """Populates the persistent vector store with indexed data"""
     vs = get_vector_store()
-    docs = await load_docs(FAQ_PATH)
+    docs = load_docs(FAQ_PATH)
     splits = split_docs(docs)
     vs.add_documents(splits)
 
@@ -32,8 +34,12 @@ def split_docs(docs: list[Document]) -> list[Document]:
     return splits
 
 
-async def load_docs(path: Path) -> list[Document]:
+def load_docs(path: Path) -> list[Document]:
     """Loads the document based on path"""
     loader = Docx2txtLoader(path)
-    docs = await loader.aload()
+    docs = loader.load()
     return docs
+
+
+if __name__ == "__main__":
+    populate_vector_store()
