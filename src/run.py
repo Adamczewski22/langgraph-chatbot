@@ -22,7 +22,6 @@ async def chat(input: str) -> str:
 
 async def main():
     console = Console()
-    await populate_vector_store()
 
     while True:
         console.print("[bold]Użytkownik[/bold]: ", end="")

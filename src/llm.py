@@ -26,7 +26,7 @@ def get_embeddings() -> Embeddings:
     return OpenAIEmbeddings(model=EMBEDDINGS_MODEL)
 
 @lru_cache(maxsize=1)
-def get_vector_store() -> VectorStore:
+def get_vector_store() -> Chroma:
     return Chroma(
         collection_name="faq_example",
         embedding_function=get_embeddings(),

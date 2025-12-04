@@ -1,3 +1,4 @@
 .env
 .vscode
 storage
+src/__pycache__/

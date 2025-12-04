@@ -23,6 +23,12 @@ def populate_vector_store() -> None:
     vs.add_documents(splits)
 
 
+def clear_vector_store() -> None:
+    """Clears the chroma vector store"""
+    vs = get_vector_store()
+    vs.reset_collection()
+
+
 def split_docs(docs: list[Document]) -> list[Document]:
     """Chunks the documents"""
     splitter = CharacterTextSplitter(
@@ -42,4 +48,5 @@ def load_docs(path: Path) -> list[Document]:
 
 
 if __name__ == "__main__":
+    clear_vector_store()
     populate_vector_store()
