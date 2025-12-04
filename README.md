@@ -2,6 +2,6 @@
 
 ## Jak uruchomić
 
-python3 -m src.run
+`python3 -m src.server` jako API lub `python3 -m src.main` żeby konwersować na terminalu.
 
-- W root trzeba stworzyć plik .env z OPENAI_API_KEY
+- Potrzebny jest evironment variable `OPENAI_API_KEY`
